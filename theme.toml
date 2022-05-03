@@ -1,0 +1,12 @@
+name = "Upcards"
+license = "MIT"
+licenselink = "https://github.com/gfngfn/hugo_theme_upcards/blob/master/LICENSE.md"
+description = "A simple card-based Hugo theme"
+homepage = "https://github.com/gfngfn/hugo_theme_upcards"
+tags = ["blog"]
+features = []
+min_version = "0.41.0"
+
+[author]
+  name = "Takashi Suwa"
+  homepage = "https://github.com/gfngfn"

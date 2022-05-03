@@ -1,0 +1,42 @@
+<nav id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ absLangURL "/" }}">{{ $.Site.Title }}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {{ range $menu := .Site.Menus.main }}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ $menu.URL }}">
+            {{ if $menu.Pre }}
+                <i data-feather="{{ $menu.Pre }}"></i>
+            {{ end }}
+            {{ safeHTML $menu.Name }}
+            </a>
+          </li>
+        {{ end }}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i data-feather="file-text"></i>Language
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {{ $current_lang := .Language }}
+            {{ $translations := .Translations }}
+            {{ range $index, $lang := .Site.Languages }}
+              {{ if eq $lang $current_lang }}
+                <li><span class="dropdown-item disabled">{{ $lang.LanguageName }}</span></li>
+              {{ else }}
+                {{ range $translation := $translations }}
+                  {{ if eq $translation.Lang $lang.Lang }}
+                    <li><a class="dropdown-item" href="{{ $translation.Permalink }}">{{ $lang.LanguageName }}</a></li>
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

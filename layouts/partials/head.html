@@ -1,0 +1,7 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{ absURL "/css/bootstrap.min.css" }}">
+  <link rel="stylesheet" type="text/css" href="{{ absURL "/css/style.css" }}">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ print .Site.Title " | " .Title }}{{ end }} </title>
+</head>

@@ -1,0 +1,36 @@
+.card-title-link {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.grid-item {
+  margin-bottom: 0.5rem;
+}
+
+.grid-board {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.single-heading {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.single-content {
+  padding-top: 2rem;
+}
+
+.single-board {
+  margin-left: auto;
+  margin-right: auto;
+  width: min(96%, 74rem);
+}
+
+.tag-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+time {
+  color: #AAAAAA;
+}

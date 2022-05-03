@@ -1,0 +1,16 @@
+{{ define "main" }}
+  {{ $page := . }}
+  <div class="jumbotron bg-light single-heading">
+    <div class="single-board">
+      <h1>{{ $page.Title }}</h1>
+      {{ if eq $page.Section "posts" }}
+        {{ partial "metadata.html" $page }}
+      {{ end }}
+    </div>
+  </div>
+  <div class="single-content">
+    <div class="single-board">
+      {{ $page.Content }}
+    </div>
+  </div>
+{{ end }}

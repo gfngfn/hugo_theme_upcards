@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <div class="single-board">
+    <div class="jumbotron">
+      <div class="tag-container">
+        {{ partial "tags.html" . }}
+      </div>
+    </div>
+    <div id="grid" class="grid grid-board">
+      {{ range $page := $.Site.RegularPages }}
+        {{ if eq $page.Section "posts" }}
+          {{ partial "card.html" $page }}
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+{{ end }}

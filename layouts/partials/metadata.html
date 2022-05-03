@@ -1,0 +1,16 @@
+{{ $page := . }}
+{{ $dateTime := $page.PublishDate.Format "2006-01-02" }}
+{{ $dateFormat := $page.Site.Params.dateFormat | default "2006-01-02" }}
+<p>
+  <time datetime="{{ $dateTime }}">{{ $page.PublishDate.Format $dateFormat }}</time>
+</p>
+{{ with $tags := $page.Params.tags }}
+  <div>
+    <span style="position: relative; z-index: 2">
+    {{ range $tag := $tags }}
+      {{ $href := print (absLangURL "tags/") (urlize $tag) }}
+      <a class="btn btn-sm btn-outline-dark tag-btn" href="{{ $href }}">{{ $tag }}</a>
+    {{ end }}
+    </span>
+  </div>
+{{ end }}
