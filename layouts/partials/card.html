@@ -1,5 +1,5 @@
 {{ $page := . }}
-<div class="upcards-grid-item" style="width: 18.5rem; padding-left: 0.25rem; padding-right: 0.25rem;">
+<div class="upcards-grid-item">
   <div class="card">
     {{ with $thumbnail := $page.Params.thumbnail }}
       <img class="card-img-top" src={{ absURL $thumbnail }} />

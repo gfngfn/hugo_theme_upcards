@@ -5,11 +5,20 @@
 
 .upcards-grid-item {
   margin-bottom: 0.5rem;
+  width: 18.5rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .upcards-grid-board {
   margin-left: auto;
   margin-right: auto;
+}
+
+.upcards-list-board {
+  margin-left: auto;
+  margin-right: auto;
+  width: min(96%, 74rem);
 }
 
 .upcards-single-heading {
@@ -24,7 +33,7 @@
 .upcards-single-board {
   margin-left: auto;
   margin-right: auto;
-  width: min(96%, 74rem);
+  width: min(96%, 40rem);
 }
 
 .upcards-tag-container {
@@ -34,6 +43,12 @@
 
 time {
   color: #AAAAAA;
+}
+
+h1.upcards-list-title {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
 h1 {
