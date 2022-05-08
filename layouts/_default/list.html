@@ -1,12 +1,12 @@
 {{ define "main" }}
-  <div class="single-heading">
-    <div class="single-board">
+  <div class="upcards-single-heading">
+    <div class="upcards-single-board">
       <h1>{{ .Title }}</h1>
       {{ partial "tags.html" . }}
     </div>
   </div>
-  <div class="single-board">
-    <div id="grid" class="grid grid-board">
+  <div class="upcards-single-board">
+    <div id="grid" class="grid upcards-grid-board">
       {{ range $page := .Pages.ByPublishDate.Reverse }}
         {{ partial "card.html" $page }}
       {{ end }}
