@@ -1,11 +1,11 @@
 {{ $page := . }}
-<div class="grid-item" style="width: 18.5rem; padding-left: 0.25rem; padding-right: 0.25rem;">
+<div class="upcards-grid-item" style="width: 18.5rem; padding-left: 0.25rem; padding-right: 0.25rem;">
   <div class="card">
     {{ with $thumbnail := $page.Params.thumbnail }}
       <img class="card-img-top" src={{ absURL $thumbnail }} />
     {{ end }}
     <div class="card-body">
-      <h4><a href="{{ $page.RelPermalink }}" class="card-title-link stretched-link">{{ $page.Title }}</a></h4>
+      <h4><a href="{{ $page.RelPermalink }}" class="upcards-card-title-link stretched-link">{{ $page.Title }}</a></h4>
       {{ partial "metadata.html" $page }}
       <p>{{ $page.Summary }}</p>
     </div>
