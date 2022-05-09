@@ -41,8 +41,14 @@
   margin-bottom: 2rem;
 }
 
-time {
+div.upcards-time-section {
   color: #AAAAAA;
+  margin-bottom: 1rem;
+}
+
+p.upcards-time {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 h1.upcards-list-title {
