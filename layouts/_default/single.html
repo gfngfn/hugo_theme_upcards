@@ -25,9 +25,15 @@
     </div>
     <script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
     <script type="text/javascript">
-      async function renderPage(page, containerElement) {
-        const scale = 1;
-        var viewport = page.getViewport({ scale: scale });
+      async function renderPage(page, containerElement, maxWidth) {
+        const rawViewport = page.getViewport({ scale: 1 });
+        const rawWidth = rawViewport.width;
+        const viewport =
+          (rawWidth > maxWidth)
+            ? page.getViewport({ scale: maxWidth / rawWidth })
+            : rawViewport;
+        console.log({ raw: rawWidth, max: maxWidth });
+
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
         var renderContext = { canvasContext: ctx, viewport: viewport };
@@ -41,7 +47,7 @@
         return page.render(renderContext).promise;
       }
 
-      async function renderPages(pdfDoc, carouselRootElement) {
+      async function renderPages(pdfDoc, carouselRootElement, maxWidth) {
         for(var num = 1; num <= pdfDoc.numPages; num++) {
           const isActive = (num === 1);
           const page = await pdfDoc.getPage(num);
@@ -51,21 +57,21 @@
           } else {
             itemElement.className = 'carousel-item bg-dark';
           }
-          const _ = await renderPage(page, itemElement);
+          const _ = await renderPage(page, itemElement, maxWidth);
           carouselRootElement.appendChild(itemElement);
         }
       }
 
-      function renderPdf(url, carouselRootElement) {
+      function renderPdf(pdfUrl, carouselRootElement, maxWidth) {
         pdfjsLib.disableWorker = true;
-        pdfjsLib.getDocument(url).promise.then((pdfDoc) => {
-          renderPages(pdfDoc, carouselRootElement)
+        pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc) => {
+          renderPages(pdfDoc, carouselRootElement, maxWidth)
         });
       }
 
       pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
       var carouselRootElement = document.getElementById("slideCarouselRoot");
-      renderPdf("{{ absURL $page.Params.slidePath | safeURL }}", carouselRootElement);
+      renderPdf("{{ absURL $page.Params.slidePath | safeURL }}", carouselRootElement, screen.width);
     </script>
   {{ end }}
   <div class="upcards-single-content">
