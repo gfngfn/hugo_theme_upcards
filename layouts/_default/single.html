@@ -1,14 +1,8 @@
 {{ define "main" }}
   {{ $page := . }}
-  <div class="jumbotron bg-light upcards-single-heading">
-    <div class="upcards-single-board">
-      <h1>{{ $page.Title }}</h1>
-      {{ if eq $page.Section "posts" }}
-        {{ partial "metadata.html" $page }}
-      {{ end }}
-    </div>
-  </div>
-  {{ if eq $page.Params.pageType "slides" }}
+  {{ $pageType := $page.Params.pageType | default "normal" }}
+  {{ if eq $pageType "slides" }}
+    {{ $slideUrl := absURL $page.Params.slidePath | safeURL}}
     <div class="upcards-slide-container">
       <div id="slideCarouselControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
         <div id="slideCarouselRoot" class="carousel-inner">
@@ -21,6 +15,15 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
+      </div>
+    </div>
+    <div class="jumbotron bg-light upcards-slide-heading">
+      <div class="upcards-single-board">
+        <h1 class="upcards-slide-title">{{ $page.Title }}</h1>
+        <p><i data-feather="download"></i><a href="{{ $slideUrl }}">PDF</a></p>
+        {{ if eq $page.Section "posts" }}
+          {{ partial "metadata.html" $page }}
+        {{ end }}
       </div>
     </div>
     <script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
@@ -83,12 +86,22 @@
 
       pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
       var carouselRootElement = document.getElementById("slideCarouselRoot");
-      const slideUrl = "{{ absURL $page.Params.slidePath | safeURL }}";
-      renderPdf(slideUrl, carouselRootElement, screen.width);
+      const maxWidthRatio = 0.9;
+      const slideUrl = "{{ $slideUrl }}";
+      renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
       window.addEventListener('resize', () => {
-        renderPdf(slideUrl, carouselRootElement, screen.width);
+        renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
       });
     </script>
+  {{ else }}
+    <div class="jumbotron bg-light upcards-single-heading">
+      <div class="upcards-single-board">
+        <h1>{{ $page.Title }}</h1>
+        {{ if eq $page.Section "posts" }}
+          {{ partial "metadata.html" $page }}
+        {{ end }}
+      </div>
+    </div>
   {{ end }}
   <div class="upcards-single-content">
     <div class="upcards-single-board">

@@ -21,6 +21,10 @@
   width: min(96%, 74rem);
 }
 
+.upcards-slide-heading {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 .upcards-single-heading {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -51,15 +55,21 @@ p.upcards-time {
   margin-bottom: 0;
 }
 
-h1.upcards-list-title {
+h1 {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.upcards-list-title {
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-size: 2rem;
 }
 
-h1 {
-  margin-top: 5rem;
-  margin-bottom: 2rem;
+.upcards-slide-title {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-size: 2rem;
 }
 
