@@ -23,7 +23,7 @@
         </button>
       </div>
     </div>
-    <script type="text/javascript" src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
     <script type="text/javascript">
       async function renderPage(page, containerElement) {
         const scale = 1;
@@ -63,8 +63,8 @@
         });
       }
 
-      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
-      var carouselRootElement = document.getElementById('slideCarouselRoot');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
+      var carouselRootElement = document.getElementById("slideCarouselRoot");
       renderPdf("{{ absURL $page.Params.slidePath | safeURL }}", carouselRootElement);
     </script>
   {{ end }}
