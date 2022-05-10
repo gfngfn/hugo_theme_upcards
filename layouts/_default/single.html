@@ -8,6 +8,68 @@
       {{ end }}
     </div>
   </div>
+  {{ if eq $page.Params.pageType "slides" }}
+    <div class="upcards-slide-container">
+      <div id="slideCarouselControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+        <div id="slideCarouselRoot" class="carousel-inner">
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#slideCarouselControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#slideCarouselControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <script type="text/javascript" src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script type="text/javascript">
+      async function renderPage(page, containerElement) {
+        const scale = 1;
+        var viewport = page.getViewport({ scale: scale });
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var renderContext = { canvasContext: ctx, viewport: viewport };
+
+        canvas.style = "display: block;";
+        canvas.className = "mx-auto";
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        containerElement.appendChild(canvas);
+
+        return page.render(renderContext).promise;
+      }
+
+      async function renderPages(pdfDoc, carouselRootElement) {
+        for(var num = 1; num <= pdfDoc.numPages; num++) {
+          const isActive = (num === 1);
+          pdfDoc.getPage(num).then((page) => {
+            var itemElement = document.createElement('div');
+            if (isActive) {
+              itemElement.className = 'carousel-item bg-dark active';
+            } else {
+              itemElement.className = 'carousel-item bg-dark';
+            }
+            renderPage(page, itemElement).then(() => {
+              carouselRootElement.appendChild(itemElement)
+            })
+          });
+        }
+      }
+
+      function renderPdf(url, carouselRootElement) {
+        pdfjsLib.disableWorker = true;
+        pdfjsLib.getDocument(url).promise.then((pdfDoc) => {
+          renderPages(pdfDoc, carouselRootElement)
+        });
+      }
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+      var carouselRootElement = document.getElementById('slideCarouselRoot');
+      renderPdf("{{ absURL $page.Params.slidePath | safeURL }}", carouselRootElement);
+    </script>
+  {{ end }}
   <div class="upcards-single-content">
     <div class="upcards-single-board">
       {{ $page.Content }}
