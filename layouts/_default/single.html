@@ -32,7 +32,6 @@
           (rawWidth > maxWidth)
             ? page.getViewport({ scale: maxWidth / rawWidth })
             : rawViewport;
-        console.log({ raw: rawWidth, max: maxWidth });
 
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
@@ -62,16 +61,33 @@
         }
       }
 
+      function removeAllChildren(carouselRootElement) {
+        while (true) {
+          var child = carouselRootElement.firstChild;
+          if (child) {
+            carouselRootElement.removeChild(child);
+          } else {
+            break;
+          }
+        }
+        return;
+      }
+
       function renderPdf(pdfUrl, carouselRootElement, maxWidth) {
         pdfjsLib.disableWorker = true;
         pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc) => {
+          removeAllChildren(carouselRootElement);
           renderPages(pdfDoc, carouselRootElement, maxWidth)
         });
       }
 
       pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
       var carouselRootElement = document.getElementById("slideCarouselRoot");
-      renderPdf("{{ absURL $page.Params.slidePath | safeURL }}", carouselRootElement, screen.width);
+      const slideUrl = "{{ absURL $page.Params.slidePath | safeURL }}";
+      renderPdf(slideUrl, carouselRootElement, screen.width);
+      window.addEventListener('resize', () => {
+        renderPdf(slideUrl, carouselRootElement, screen.width);
+      });
     </script>
   {{ end }}
   <div class="upcards-single-content">
