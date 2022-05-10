@@ -44,17 +44,15 @@
       async function renderPages(pdfDoc, carouselRootElement) {
         for(var num = 1; num <= pdfDoc.numPages; num++) {
           const isActive = (num === 1);
-          pdfDoc.getPage(num).then((page) => {
-            var itemElement = document.createElement('div');
-            if (isActive) {
-              itemElement.className = 'carousel-item bg-dark active';
-            } else {
-              itemElement.className = 'carousel-item bg-dark';
-            }
-            renderPage(page, itemElement).then(() => {
-              carouselRootElement.appendChild(itemElement)
-            })
-          });
+          const page = await pdfDoc.getPage(num);
+          var itemElement = document.createElement('div');
+          if (isActive) {
+            itemElement.className = 'carousel-item bg-dark active';
+          } else {
+            itemElement.className = 'carousel-item bg-dark';
+          }
+          const _ = await renderPage(page, itemElement);
+          carouselRootElement.appendChild(itemElement);
         }
       }
 
