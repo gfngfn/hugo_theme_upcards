@@ -14,11 +14,56 @@ ignoreErrors = ["error-disable-taxonomy"]
 [taxonomies]
   tag = 'tags'
 
-[permalinks]
-  posts = '/posts/:year/:month/:day/:filename/'
+defaultContentLanguage = ...
+[languages]
+  ...
 ```
 
 i.e., it expects the tag to be the sole taxonomy and the pages for taxonimies or sections to be disabled.
+
+
+## Theme-specific Configuration Parameters
+
+### `lastmodPre`/`lastmodPost`
+
+The prefix/suffix for displaying last modified datetimes.
+
+Example:
+
+```toml
+...
+[languages]
+  [languages.en]
+    ...
+    lastmodPre = "(last modified: "
+    lastmodPost = ")"
+...
+```
+
+
+## Theme-specific Front Matter Parameters
+
+### `thumbnail`
+
+The path to the thumbnail image relative to `$YOUR_SITE_REPO/static`. No thumbnail image will be displayed if omitted.
+
+
+### `pageType`
+
+The page type (`"normal"` or `"slides"`). Default: `"normal"`
+
+
+### `slidePath`
+
+The path to the PDF file for slides relative to `$YOUR_SITE_REPO/static`. Effective and mandatory when `pageType = "slides"`.
+
+Example:
+
+```yaml
+thumbnail: "/media/thumbnail-of-your-slides.png"
+pageType: "slides"
+slidePath: "/media/slides.pdf"
+```
 
 
 ## Dependencies and Their License
