@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
     {{- partial "head.html" . -}}
-    <body class="d-flex flex-column" style="min-height: 100vh;">
+    <body class="d-flex flex-column {{ block "additional-body-class" . }}{{ end }}" style="min-height: 100vh;">
         {{- partial "header.html" . -}}
-        <main id="content" class="mb-auto">
         {{- block "main" . }}{{- end }}
-        </main>
         {{- partial "footer.html" . -}}
         {{- partial "script.html" . -}}
     </body>

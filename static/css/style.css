@@ -41,13 +41,23 @@
 }
 
 .upcards-tag-container {
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
+}
+
+.upcards-tag-button {
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem;
+}
+
+.upcards-loading-slides {
+  text-align: center;
+  color: white;
 }
 
 div.upcards-time-section {
   color: #AAAAAA;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 p.upcards-time {
@@ -61,13 +71,19 @@ h1 {
   font-size: 2rem;
 }
 
-.upcards-list-title {
+h1.upcards-list-title {
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-size: 2rem;
 }
 
-.upcards-slide-title {
+h1.upcards-slide-title {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+h1.upcards-single-board-title {
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-size: 2rem;

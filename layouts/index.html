@@ -1,16 +1,19 @@
+{{ define "additional-body-class" }}bg-light{{ end }}
 {{ define "main" }}
-  <div class="upcards-list-board">
-    <div class="jumbotron">
-      <div class="upcards-tag-container">
-        {{ partial "tags.html" . }}
+  <main class="mb-auto pt-3 pb-5">
+    <div class="upcards-list-board">
+      <div class="jumbotron">
+        <div class="upcards-tag-container">
+          {{ partial "tags.html" . }}
+        </div>
+      </div>
+      <div id="grid" class="grid upcards-grid-board">
+        {{ range $page := $.Site.RegularPages }}
+          {{ if eq $page.Section "posts" }}
+            {{ partial "card.html" $page }}
+          {{ end }}
+        {{ end }}
       </div>
     </div>
-    <div id="grid" class="grid upcards-grid-board">
-      {{ range $page := $.Site.RegularPages }}
-        {{ if eq $page.Section "posts" }}
-          {{ partial "card.html" $page }}
-        {{ end }}
-      {{ end }}
-    </div>
-  </div>
+  </main>
 {{ end }}
