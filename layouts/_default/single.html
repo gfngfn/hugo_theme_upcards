@@ -1,111 +1,116 @@
 {{ define "main" }}
   {{ $page := . }}
   {{ $pageType := $page.Params.pageType | default "normal" }}
-  {{ if eq $pageType "slides" }}
-    {{ $slideUrl := absURL $page.Params.slidePath | safeURL}}
-    <div class="upcards-slide-container">
-      <div id="slideCarouselControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
-        <div id="slideCarouselRoot" class="carousel-inner">
+  <main class="mb-auto pb-5">
+    {{ if eq $pageType "slides" }}
+      {{ $slideUrl := absURL $page.Params.slidePath | safeURL}}
+      <div class="upcards-slide-container">
+        <div id="slideCarouselControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+          <div id="slideCarouselRoot" class="carousel-inner">
+            <div class="bg-secondary upcards-loading-slides">
+              <span>Loading slides...</span>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#slideCarouselControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#slideCarouselControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#slideCarouselControls" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#slideCarouselControls" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
       </div>
-    </div>
-    <div class="jumbotron bg-light upcards-slide-heading">
-      <div class="upcards-single-board">
-        <h1 class="upcards-slide-title">{{ $page.Title }}</h1>
-        <p><i data-feather="download"></i><a href="{{ $slideUrl }}">PDF</a></p>
-        {{ if eq $page.Section "posts" }}
-          {{ partial "metadata.html" $page }}
-        {{ end }}
+      <div class="jumbotron bg-light upcards-slide-heading">
+        <div class="upcards-single-board">
+          <h1 class="upcards-slide-title">{{ $page.Title }}</h1>
+          <p><i data-feather="download"></i><a href="{{ $slideUrl }}">PDF</a></p>
+          {{ if eq $page.Section "posts" }}
+            {{ partial "metadata.html" $page }}
+          {{ end }}
+        </div>
       </div>
-    </div>
-    <script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
-    <script type="text/javascript">
-      async function renderPage(page, containerElement, maxWidth) {
-        const rawViewport = page.getViewport({ scale: 1 });
-        const rawWidth = rawViewport.width;
-        const viewport =
-          (rawWidth > maxWidth)
-            ? page.getViewport({ scale: maxWidth / rawWidth })
-            : rawViewport;
+      <script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
+      <script type="text/javascript">
+        async function renderPage(page, containerElement, maxWidth) {
+          const rawViewport = page.getViewport({ scale: 1 });
+          const rawWidth = rawViewport.width;
+          const viewport =
+            (rawWidth > maxWidth)
+              ? page.getViewport({ scale: maxWidth / rawWidth })
+              : rawViewport;
 
-        var canvas = document.createElement('canvas');
-        var ctx = canvas.getContext('2d');
-        var renderContext = { canvasContext: ctx, viewport: viewport };
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
+          var renderContext = { canvasContext: ctx, viewport: viewport };
 
-        canvas.style = "display: block;";
-        canvas.className = "mx-auto";
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        containerElement.appendChild(canvas);
+          canvas.style = "display: block;";
+          canvas.className = "mx-auto";
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+          containerElement.appendChild(canvas);
 
-        return page.render(renderContext).promise;
-      }
-
-      async function renderPages(pdfDoc, carouselRootElement, maxWidth) {
-        for(var num = 1; num <= pdfDoc.numPages; num++) {
-          const isActive = (num === 1);
-          const page = await pdfDoc.getPage(num);
-          var itemElement = document.createElement('div');
-          if (isActive) {
-            itemElement.className = 'carousel-item bg-dark active';
-          } else {
-            itemElement.className = 'carousel-item bg-dark';
-          }
-          const _ = await renderPage(page, itemElement, maxWidth);
-          carouselRootElement.appendChild(itemElement);
+          return page.render(renderContext).promise;
         }
-      }
 
-      function removeAllChildren(carouselRootElement) {
-        while (true) {
-          var child = carouselRootElement.firstChild;
-          if (child) {
-            carouselRootElement.removeChild(child);
-          } else {
-            break;
+        async function renderPages(pdfDoc, carouselRootElement, maxWidth) {
+          for(var num = 1; num <= pdfDoc.numPages; num++) {
+            const isActive = (num === 1);
+            const page = await pdfDoc.getPage(num);
+            var itemElement = document.createElement('div');
+            if (isActive) {
+              itemElement.className = 'carousel-item bg-secondary active';
+            } else {
+              itemElement.className = 'carousel-item bg-secondary';
+            }
+            const _ = await renderPage(page, itemElement, maxWidth);
+            carouselRootElement.appendChild(itemElement);
           }
         }
-        return;
-      }
 
-      function renderPdf(pdfUrl, carouselRootElement, maxWidth) {
-        pdfjsLib.disableWorker = true;
-        pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc) => {
-          removeAllChildren(carouselRootElement);
-          renderPages(pdfDoc, carouselRootElement, maxWidth)
-        });
-      }
+        function removeAllChildren(carouselRootElement) {
+          while (true) {
+            var child = carouselRootElement.firstChild;
+            if (child) {
+              carouselRootElement.removeChild(child);
+            } else {
+              break;
+            }
+          }
+          return;
+        }
 
-      pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
-      var carouselRootElement = document.getElementById("slideCarouselRoot");
-      const maxWidthRatio = 0.9;
-      const slideUrl = "{{ $slideUrl }}";
-      renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
-      window.addEventListener('resize', () => {
+        function renderPdf(pdfUrl, carouselRootElement, maxWidth) {
+          pdfjsLib.disableWorker = true;
+          pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc) => {
+            removeAllChildren(carouselRootElement);
+            renderPages(pdfDoc, carouselRootElement, maxWidth)
+          });
+        }
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
+        var carouselRootElement = document.getElementById("slideCarouselRoot");
+        const maxWidthRatio = 0.9;
+        const slideUrl = "{{ $slideUrl }}";
         renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
-      });
-    </script>
-  {{ else }}
-    <div class="jumbotron bg-light upcards-single-heading">
+        window.addEventListener('resize', () => {
+          renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
+        });
+      </script>
+    {{ else }}
+      <div class="jumbotron bg-light upcards-single-heading">
+        <div class="upcards-single-board">
+          <h1 class="upcards-single-board-title">{{ $page.Title }}</h1>
+          {{ if eq $page.Section "posts" }}
+            {{ partial "metadata.html" $page }}
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+    <div class="upcards-single-content">
       <div class="upcards-single-board">
-        <h1>{{ $page.Title }}</h1>
-        {{ if eq $page.Section "posts" }}
-          {{ partial "metadata.html" $page }}
-        {{ end }}
+        {{ $page.Content }}
       </div>
     </div>
-  {{ end }}
-  <div class="upcards-single-content">
-    <div class="upcards-single-board">
-      {{ $page.Content }}
-    </div>
-  </div>
+  </main>
 {{ end }}
