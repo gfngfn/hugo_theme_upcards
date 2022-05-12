@@ -101,10 +101,12 @@
         });
       </script>
     {{ else if eq $pageType "image" }}
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center bg-light">
         {{ range $imageRelPath := $page.Params.imagePaths -}}
           {{- $imageUrl := absURL $imageRelPath | safeURL -}}
-          <a href="{{ $imageUrl }}"><img src="{{ $imageUrl }}" style="border-radius: 0.25rem; margin-top: 2rem; margin-bottom: 1rem; margin-right: 2rem; margin-left: 2rem; max-width: calc(100% - 4rem); max-height: 80vh; filter: drop-shadow(0 0 0.25rem rgba(0.8, 0.8, 0.8, 0.2));" /></a>
+          <div class="card m-3">
+            <a href="{{ $imageUrl }}"><img src="{{ $imageUrl }}" class="upcards-displayed-image" /></a>
+          </div>
         {{- end }}
       </div>
       <div class="upcards-single-heading">

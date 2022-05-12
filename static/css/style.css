@@ -55,6 +55,19 @@
   color: white;
 }
 
+img.upcards-displayed-image {
+/*
+  border-radius: 0.25rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  filter: drop-shadow(0 0 0.125rem rgba(0.8, 0.8, 0.8, 0.2));
+*/
+  max-width: calc(100vw - 4rem);
+  max-height: 70vh;
+}
+
 div.upcards-time-section {
   color: #AAAAAA;
   margin-bottom: 0.5rem;
