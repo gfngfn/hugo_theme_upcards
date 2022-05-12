@@ -1,13 +1,38 @@
+{{ $linkClass := "upcards-card-title-link stretched-link" }}
+
 {{ $page := . }}
+{{ $pageType := $page.Params.pageType }}
+
+{{ $dateFormat := $page.Site.Params.dateFormat | default "2006-01-02" }}
+{{ $publishDate := $page.PublishDate }}
+{{ $formattedPublishDate := $publishDate.Format $dateFormat }}
+
 <div class="upcards-grid-item">
   <div class="card">
-    {{ with $thumbnail := $page.Params.thumbnail }}
-      <img class="card-img-top" src={{ absURL $thumbnail }} />
+    {{ if eq $pageType "slides" }}
+      {{ $thumbnail := $page.Params.thumbnail }}
+      {{ if $page.Params.showTitleOnCard }}
+        <img class="card-img-top" src={{ absURL $thumbnail }} />
+        <div class="card-body">
+          <p class="card-text"><a href="{{ $page.RelPermalink }}" class="{{ $linkClass }}">{{ $page.Title }}</a></p>
+        </div>
+      {{ else }}
+        <a href="{{ $page.RelPermalink }}" class="{{ $linkClass }}"><img class="card-img-top" src={{ absURL $thumbnail }} /></a>
+      {{ end }}
+    {{ else if eq $pageType "image" }}
+      {{ $thumbnail := $page.Params.thumbnail }}
+      <a href="{{ $page.RelPermalink }}" class="{{ $linkClass }}"><img class="card-img-top" src={{ absURL $thumbnail }} /></a>
+    {{ else }}
+      {{ with $thumbnail := $page.Params.thumbnail }}
+        <img class="card-img-top" src={{ absURL $thumbnail }} />
+      {{ end }}
+      <div class="card-body">
+        <h4 class="card-title"><a href="{{ $page.RelPermalink }}" class="{{ $linkClass }}">{{ $page.Title }}</a></h4>
+        <div class="upcards-time-section">
+          <time datetime="{{ $publishDate.Format "2006-01-02" }}">{{ $formattedPublishDate }}</time>
+        </div>
+        {{ $page.Summary }}
+      </div>
     {{ end }}
-    <div class="card-body">
-      <h4><a href="{{ $page.RelPermalink }}" class="upcards-card-title-link stretched-link">{{ $page.Title }}</a></h4>
-      {{ partial "metadata.html" $page }}
-      <p>{{ $page.Summary }}</p>
-    </div>
   </div>
 </div>

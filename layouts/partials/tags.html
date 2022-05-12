@@ -3,7 +3,7 @@
   {{ if eq $taxonomy_name "tags" }}
     {{ range $tag, $value := $taxonomy }}
       {{ $href := print (absLangURL "tags/") (urlize $tag) }}
-      <a class="btn btn-sm btn-outline-dark tag-btn" href="{{ $href }}">{{ $tag }}</a>
+      <a class="btn btn-sm btn-outline-dark tag-btn upcards-tag-button" href="{{ $href }}">{{ $tag }}</a>
     {{ end }}
   {{ end }}
 {{ end }}

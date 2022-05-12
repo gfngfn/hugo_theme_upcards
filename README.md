@@ -50,7 +50,7 @@ The path to the thumbnail image relative to `$YOUR_SITE_REPO/static`. No thumbna
 
 ### `pageType`
 
-The page type (`"normal"` or `"slides"`). Default: `"normal"`
+The page type (`"normal"`, `"slides"`, or `"image"`). Default: `"normal"`
 
 
 ### `slidePath`
@@ -64,6 +64,16 @@ thumbnail: "/media/thumbnail-of-your-slides.png"
 pageType: "slides"
 slidePath: "/media/slides.pdf"
 ```
+
+
+### `showTitleOnCard`
+
+Effective when `pageType = "slides"`. Titles of presentations will be displayed on cards if this option is set. Default: `false` (i.e. titles are not displayed on slide cards)
+
+
+### `imagePaths`
+
+The list of paths to the image files relative to `$YOUR_SITE_REPO/static`. Effective when `pageType = "image"`.
 
 
 ## Dependencies and Their License

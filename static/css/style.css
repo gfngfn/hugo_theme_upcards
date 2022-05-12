@@ -4,10 +4,10 @@
 }
 
 .upcards-grid-item {
-  margin-bottom: 0.5rem;
-  width: 18.5rem;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+  margin-bottom: 1.0rem;
+  width: 19rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .upcards-grid-board {
@@ -18,7 +18,7 @@
 .upcards-list-board {
   margin-left: auto;
   margin-right: auto;
-  width: min(96%, 74rem);
+  width: min(96%, 76rem);
 }
 
 .upcards-slide-heading {
@@ -53,6 +53,11 @@
 .upcards-loading-slides {
   text-align: center;
   color: white;
+}
+
+img.upcards-displayed-image {
+  max-width: calc(100vw - 4rem);
+  max-height: 70vh;
 }
 
 div.upcards-time-section {
