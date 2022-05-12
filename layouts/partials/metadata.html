@@ -1,13 +1,12 @@
 {{ $page := . }}
 {{ $publishDate := $page.PublishDate }}
-{{ $dateTime := $publishDate.Format "2006-01-02" }}
 {{ $dateFormat := $page.Site.Params.dateFormat | default "2006-01-02" }}
 {{ $lastmodPre := $page.Site.Params.lastmodPre | default "last modified: " }}
 {{ $lastmodPost := $page.Site.Params.lastmodPost | default "" }}
 {{ $formattedPublishDate := $publishDate.Format $dateFormat }}
 <div class="upcards-time-section">
   <p class="upcards-time">
-    <time datetime="{{ $dateTime }}">{{ $formattedPublishDate }}</time>
+    <time datetime="{{ $publishDate.Format "2006-01-02" }}">{{ $formattedPublishDate }}</time>
   </p>
   {{ with $lastmod := $page.Lastmod }}
     {{ $formattedLastmod := $lastmod.Format $dateFormat }}
