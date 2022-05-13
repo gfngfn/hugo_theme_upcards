@@ -101,7 +101,7 @@
         });
       </script>
     {{ else if eq $pageType "image" }}
-      <div class="d-flex justify-content-center bg-light">
+      <div class="d-flex flex-wrap justify-content-center bg-light">
         {{ range $imageRelPath := $page.Params.imagePaths -}}
           {{- $imageUrl := absURL $imageRelPath | safeURL -}}
           <div class="card m-3">
