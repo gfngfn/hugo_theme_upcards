@@ -1,11 +1,11 @@
 {{ define "additional-body-class" }}bg-light{{ end }}
 {{ define "main" }}
   <main class="mb-auto pb-5">
-    <div class="mt-4 mb-4 upcards-tag-board">
+    <div class="mt-4 mb-4 mx-auto upcards-tag-board">
       {{ partial "tags.html" . }}
     </div>
-    <div class="upcards-list-board">
-      <div id="grid" class="grid upcards-grid-board">
+    <div class="mx-auto upcards-list-board">
+      <div id="grid" class="grid mx-auto">
         {{ range $page := $.Site.RegularPages }}
           {{ if eq $page.Section "posts" }}
             {{ partial "card.html" $page }}

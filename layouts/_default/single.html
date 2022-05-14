@@ -20,7 +20,7 @@
         </button>
       </div>
       <div class="jumbotron bg-light upcards-slide-heading">
-        <div class="upcards-single-board">
+        <div class="mx-auto upcards-single-board">
           <h1 class="upcards-slide-title">{{ $page.Title }}</h1>
           <p><i data-feather="download"></i><a href="{{ $slideUrl }}">PDF</a></p>
           {{ if eq $page.Section "posts" }}
@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="upcards-single-content">
-        <div class="upcards-single-board">
+        <div class="mx-auto upcards-single-board">
           {{ $page.Content }}
         </div>
       </div>
@@ -110,7 +110,7 @@
         {{- end }}
       </div>
       <div class="upcards-single-heading">
-        <div class="upcards-single-board">
+        <div class="mx-auto upcards-single-board">
           <h1 class="upcards-single-board-title">{{ $page.Title }}</h1>
           {{ if eq $page.Section "posts" }}
             {{ partial "metadata.html" $page }}
@@ -122,7 +122,7 @@
       </div>
     {{ else }}
       <div class="jumbotron bg-light upcards-single-heading">
-        <div class="upcards-single-board">
+        <div class="mx-auto upcards-single-board">
           <h1 class="upcards-single-board-title">{{ $page.Title }}</h1>
           {{ if eq $page.Section "posts" }}
             {{ partial "metadata.html" $page }}
@@ -130,7 +130,7 @@
         </div>
       </div>
       <div class="upcards-single-content">
-        <div class="upcards-single-board">
+        <div class="mx-auto upcards-single-board">
           {{ $page.Content }}
         </div>
       </div>
