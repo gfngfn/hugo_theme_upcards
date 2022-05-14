@@ -35,6 +35,8 @@
       </div>
       <script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
       <script type="text/javascript">
+        var state = null;
+
         async function renderPage(page, containerElement, maxWidth) {
           const rawViewport = page.getViewport({ scale: 1 });
           const rawWidth = rawViewport.width;
@@ -53,11 +55,13 @@
           canvas.width = viewport.width;
           containerElement.appendChild(canvas);
 
-          return page.render(renderContext).promise;
+          await page.render(renderContext).promise;
+          return { canvas: canvas, rawWidth: rawWidth };
         }
 
         async function renderPages(pdfDoc, carouselRootElement, maxWidth) {
-          for(var num = 1; num <= pdfDoc.numPages; num++) {
+          var elements = [];
+          for (var num = 1; num <= pdfDoc.numPages; num++) {
             const isActive = (num === 1);
             const page = await pdfDoc.getPage(num);
             var itemElement = document.createElement('div');
@@ -66,9 +70,12 @@
             } else {
               itemElement.className = 'carousel-item bg-secondary';
             }
-            const _ = await renderPage(page, itemElement, maxWidth);
+            const element = await renderPage(page, itemElement, maxWidth);
+            elements.push(element);
             carouselRootElement.appendChild(itemElement);
           }
+          state = { elements: elements };
+          return
         }
 
         function removeAllChildren(carouselRootElement) {
@@ -91,13 +98,23 @@
           });
         }
 
+        function scaleCanvases(maxWidth) {
+          if (state === null) {
+            return;
+          } else {
+            state.elements.forEach(({ canvas, rawWidth }, i) => {
+              canvas.style.width = (rawWidth > maxWidth) ? maxWidth : rawWidth;
+            });
+          }
+        }
+
         pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
         var carouselRootElement = document.getElementById("slideCarouselRoot");
         const maxWidthRatio = 0.9;
         const slideUrl = "{{ $slideUrl }}";
         renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
         window.addEventListener('resize', () => {
-          renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
+          scaleCanvases(screen.width * maxWidthRatio);
         });
       </script>
     {{ else if eq $pageType "image" }}
