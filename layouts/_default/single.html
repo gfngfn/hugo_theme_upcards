@@ -40,26 +40,39 @@
         /* state : null | { elements : list(element) } */
         var state = null;
 
+        /* getNewSize : (number, number, number) -> { newWidth: int, newHeight: int } */
+        function getNewSize(rawWidth, rawHeight, maxWidth) {
+          if (rawWidth > maxWidth) {
+            const scale = maxWidth / rawWidth;
+            return { newWidth: maxWidth, newHeight: rawHeight * scale };
+          } else {
+            return { newWidth: rawWidth, newHeight: rawHeight };
+          }
+        }
+
         /* renderPage : (page, domElement) -> element */
-        function renderPage(page, containerElement) {
+        async function renderPage(page, containerElement) {
           const rawViewport = page.getViewport({ scale: 1 });
           const rawWidth = rawViewport.width;
+          const rawHeight = rawViewport.height;
 
           var canvas = document.createElement('canvas');
           canvas.style = "display: block;";
           canvas.className = "mx-auto";
+          canvas.width = rawWidth;
+          canvas.height = rawHeight;
           containerElement.appendChild(canvas);
+
+          var ctx = canvas.getContext('2d');
+          var renderContext = { canvasContext: ctx, viewport: rawViewport };
+          await page.render(renderContext).promise;
 
           /* resizeFun : (maxWidth: number) -> promise(unit) */
           const resizeFun = async (maxWidth) => {
-            var ctx = canvas.getContext('2d');
-            const displayScale = (rawWidth > maxWidth) ? maxWidth / rawWidth : 1;
-            canvas.height = rawViewport.height * displayScale;
-            canvas.width = rawViewport.width * displayScale;
-            console.log({ message: "resizing", rawWidth: rawWidth, maxWidth: maxWidth }); /* TEMPORARY */
-            ctx.scale(displayScale, displayScale);
-            var renderContext = { canvasContext: ctx, viewport: rawViewport };
-            await page.render(renderContext).promise;
+            const { newWidth, newHeight } = getNewSize(rawWidth, rawHeight, maxWidth);
+            console.log({ message: "resizing", rawWidth: rawWidth, rawHeight: rawHeight, maxWidth: maxWidth, newWidth: newWidth, newHeight: newHeight }); /* TEMPORARY */
+            canvas.style.width = `${newWidth}px`;
+            canvas.style.height = `${newHeight}px`;
             return;
           };
           return { resizeFun: resizeFun };
@@ -77,7 +90,7 @@
             } else {
               itemElement.className = 'carousel-item bg-secondary';
             }
-            const element = renderPage(page, itemElement);
+            const element = await renderPage(page, itemElement);
             elements.push(element);
             carouselRootElement.appendChild(itemElement);
           }
