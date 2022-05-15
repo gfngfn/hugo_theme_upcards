@@ -56,6 +56,7 @@
             const displayScale = (rawWidth > maxWidth) ? maxWidth / rawWidth : 1;
             canvas.height = rawViewport.height * displayScale;
             canvas.width = rawViewport.width * displayScale;
+            console.log({ message: "resizing", rawWidth: rawWidth, maxWidth: maxWidth }); /* TEMPORARY */
             ctx.scale(displayScale, displayScale);
             var renderContext = { canvasContext: ctx, viewport: rawViewport };
             await page.render(renderContext).promise;
@@ -89,7 +90,8 @@
           pdfjsLib.disableWorker = true;
           const pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise
           await renderPages(pdfDoc, carouselRootElement);
-          scaleCanvases(screen.width * maxWidthRatio);
+          const newWidth = document.body.clientWidth;
+          scaleCanvases(newWidth * maxWidthRatio);
         }
 
         async function scaleCanvases(maxWidth) {
@@ -98,7 +100,6 @@
           } else {
             for (const element of state.elements) {
               const { resizeFun } = element;
-              console.log("resizing");
               await resizeFun(maxWidth);
             }
             return;
@@ -111,7 +112,8 @@
         const slideUrl = "{{ $slideUrl }}";
         renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
         window.addEventListener('resize', () => {
-          scaleCanvases(screen.width * maxWidthRatio);
+          const newWidth = document.body.clientWidth;
+          scaleCanvases(newWidth * maxWidthRatio);
         });
       </script>
     {{ else if eq $pageType "image" }}
