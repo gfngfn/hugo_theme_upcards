@@ -35,31 +35,37 @@
       </div>
       <script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
       <script type="text/javascript">
+        /* type element = { resizeFun : (maxWidth: number) -> promise(unit) } */
+
+        /* state : null | { elements : list(element) } */
         var state = null;
 
-        async function renderPage(page, containerElement, maxWidth) {
+        /* renderPage : (page, domElement) -> element */
+        function renderPage(page, containerElement) {
           const rawViewport = page.getViewport({ scale: 1 });
           const rawWidth = rawViewport.width;
-          const viewport =
-            (rawWidth > maxWidth)
-              ? page.getViewport({ scale: maxWidth / rawWidth })
-              : rawViewport;
 
           var canvas = document.createElement('canvas');
-          var ctx = canvas.getContext('2d');
-          var renderContext = { canvasContext: ctx, viewport: viewport };
-
           canvas.style = "display: block;";
           canvas.className = "mx-auto";
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
           containerElement.appendChild(canvas);
 
-          await page.render(renderContext).promise;
-          return { canvas: canvas, rawWidth: rawWidth };
+          /* resizeFun : (maxWidth: number) -> promise(unit) */
+          const resizeFun = async (maxWidth) => {
+            var ctx = canvas.getContext('2d');
+            const displayScale = (rawWidth > maxWidth) ? maxWidth / rawWidth : 1;
+            canvas.height = rawViewport.height * displayScale;
+            canvas.width = rawViewport.width * displayScale;
+            ctx.scale(displayScale, displayScale);
+            var renderContext = { canvasContext: ctx, viewport: rawViewport };
+            await page.render(renderContext).promise;
+            return;
+          };
+          return { resizeFun: resizeFun };
         }
 
-        async function renderPages(pdfDoc, carouselRootElement, maxWidth) {
+        /* renderPages : (pdf, domElement) -> promise(unit) */
+        async function renderPages(pdfDoc, carouselRootElement) {
           var elements = [];
           for (var num = 1; num <= pdfDoc.numPages; num++) {
             const isActive = (num === 1);
@@ -70,41 +76,32 @@
             } else {
               itemElement.className = 'carousel-item bg-secondary';
             }
-            const element = await renderPage(page, itemElement, maxWidth);
+            const element = renderPage(page, itemElement);
             elements.push(element);
             carouselRootElement.appendChild(itemElement);
           }
           state = { elements: elements };
-          return
-        }
-
-        function removeAllChildren(carouselRootElement) {
-          while (true) {
-            var child = carouselRootElement.firstChild;
-            if (child) {
-              carouselRootElement.removeChild(child);
-            } else {
-              break;
-            }
-          }
           return;
         }
 
-        function renderPdf(pdfUrl, carouselRootElement, maxWidth) {
+        /* renderPdf : (pdfUrl: string, domElement) -> promise(unit) */
+        async function renderPdf(pdfUrl, carouselRootElement) {
           pdfjsLib.disableWorker = true;
-          pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc) => {
-            removeAllChildren(carouselRootElement);
-            renderPages(pdfDoc, carouselRootElement, maxWidth)
-          });
+          const pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise
+          await renderPages(pdfDoc, carouselRootElement);
+          scaleCanvases(screen.width * maxWidthRatio);
         }
 
-        function scaleCanvases(maxWidth) {
+        async function scaleCanvases(maxWidth) {
           if (state === null) {
             return;
           } else {
-            state.elements.forEach(({ canvas, rawWidth }, i) => {
-              canvas.style.width = (rawWidth > maxWidth) ? maxWidth : rawWidth;
-            });
+            for (const element of state.elements) {
+              const { resizeFun } = element;
+              console.log("resizing");
+              await resizeFun(maxWidth);
+            }
+            return;
           }
         }
 
