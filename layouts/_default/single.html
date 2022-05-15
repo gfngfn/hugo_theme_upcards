@@ -6,7 +6,7 @@
       {{ $slideUrl := absURL $page.Params.slidePath | safeURL }}
       <div id="slideCarouselControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
         <div id="slideCarouselRoot" class="carousel-inner">
-          <div class="bg-secondary upcards-loading-slides">
+          <div id="upcardsTemporaryMessageLoadingSlides" class="bg-secondary upcards-loading-slides">
             <span>Loading slides...</span>
           </div>
         </div>
@@ -70,7 +70,6 @@
           /* resizeFun : (maxWidth: number) -> promise(unit) */
           const resizeFun = async (maxWidth) => {
             const { newWidth, newHeight } = getNewSize(rawWidth, rawHeight, maxWidth);
-            console.log({ message: "resizing", rawWidth: rawWidth, rawHeight: rawHeight, maxWidth: maxWidth, newWidth: newWidth, newHeight: newHeight }); /* TEMPORARY */
             canvas.style.width = `${newWidth}px`;
             canvas.style.height = `${newHeight}px`;
             return;
@@ -102,11 +101,13 @@
         async function renderPdf(pdfUrl, carouselRootElement) {
           pdfjsLib.disableWorker = true;
           const pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise
+          carouselRootElement.removeChild(document.getElementById("upcardsTemporaryMessageLoadingSlides"));
           await renderPages(pdfDoc, carouselRootElement);
           const newWidth = document.body.clientWidth;
           scaleCanvases(newWidth * maxWidthRatio);
         }
 
+        /* scaleCanvases : (number) -> promise(unit) */
         async function scaleCanvases(maxWidth) {
           if (state === null) {
             return;
