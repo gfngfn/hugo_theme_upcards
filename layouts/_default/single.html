@@ -6,7 +6,7 @@
       {{ $slideUrl := absURL $page.Params.slidePath | safeURL }}
       <div id="slideCarouselControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
         <div id="slideCarouselRoot" class="carousel-inner">
-          <div class="bg-secondary upcards-loading-slides">
+          <div id="upcardsTemporaryMessageLoadingSlides" class="bg-secondary upcards-loading-slides">
             <span>Loading slides...</span>
           </div>
         </div>
@@ -35,29 +35,52 @@
       </div>
       <script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
       <script type="text/javascript">
-        async function renderPage(page, containerElement, maxWidth) {
-          const rawViewport = page.getViewport({ scale: 1 });
-          const rawWidth = rawViewport.width;
-          const viewport =
-            (rawWidth > maxWidth)
-              ? page.getViewport({ scale: maxWidth / rawWidth })
-              : rawViewport;
+        /* type element = { resizeFun : (maxWidth: number) -> promise(unit) } */
 
-          var canvas = document.createElement('canvas');
-          var ctx = canvas.getContext('2d');
-          var renderContext = { canvasContext: ctx, viewport: viewport };
+        /* state : null | { elements : list(element) } */
+        var state = null;
 
-          canvas.style = "display: block;";
-          canvas.className = "mx-auto";
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          containerElement.appendChild(canvas);
-
-          return page.render(renderContext).promise;
+        /* getNewSize : (number, number, number) -> { newWidth: int, newHeight: int } */
+        function getNewSize(rawWidth, rawHeight, maxWidth) {
+          if (rawWidth > maxWidth) {
+            const scale = maxWidth / rawWidth;
+            return { newWidth: maxWidth, newHeight: rawHeight * scale };
+          } else {
+            return { newWidth: rawWidth, newHeight: rawHeight };
+          }
         }
 
-        async function renderPages(pdfDoc, carouselRootElement, maxWidth) {
-          for(var num = 1; num <= pdfDoc.numPages; num++) {
+        /* renderPage : (page, domElement) -> element */
+        async function renderPage(page, containerElement) {
+          const rawViewport = page.getViewport({ scale: 1 });
+          const rawWidth = rawViewport.width;
+          const rawHeight = rawViewport.height;
+
+          var canvas = document.createElement('canvas');
+          canvas.style = "display: block;";
+          canvas.className = "mx-auto";
+          canvas.width = rawWidth;
+          canvas.height = rawHeight;
+          containerElement.appendChild(canvas);
+
+          var ctx = canvas.getContext('2d');
+          var renderContext = { canvasContext: ctx, viewport: rawViewport };
+          await page.render(renderContext).promise;
+
+          /* resizeFun : (maxWidth: number) -> promise(unit) */
+          const resizeFun = async (maxWidth) => {
+            const { newWidth, newHeight } = getNewSize(rawWidth, rawHeight, maxWidth);
+            canvas.style.width = `${newWidth}px`;
+            canvas.style.height = `${newHeight}px`;
+            return;
+          };
+          return { resizeFun: resizeFun };
+        }
+
+        /* renderPages : (pdf, domElement) -> promise(unit) */
+        async function renderPages(pdfDoc, carouselRootElement) {
+          var elements = [];
+          for (var num = 1; num <= pdfDoc.numPages; num++) {
             const isActive = (num === 1);
             const page = await pdfDoc.getPage(num);
             var itemElement = document.createElement('div');
@@ -66,29 +89,35 @@
             } else {
               itemElement.className = 'carousel-item bg-secondary';
             }
-            const _ = await renderPage(page, itemElement, maxWidth);
+            const element = await renderPage(page, itemElement);
+            elements.push(element);
             carouselRootElement.appendChild(itemElement);
           }
-        }
-
-        function removeAllChildren(carouselRootElement) {
-          while (true) {
-            var child = carouselRootElement.firstChild;
-            if (child) {
-              carouselRootElement.removeChild(child);
-            } else {
-              break;
-            }
-          }
+          state = { elements: elements };
           return;
         }
 
-        function renderPdf(pdfUrl, carouselRootElement, maxWidth) {
+        /* renderPdf : (pdfUrl: string, domElement) -> promise(unit) */
+        async function renderPdf(pdfUrl, carouselRootElement) {
           pdfjsLib.disableWorker = true;
-          pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc) => {
-            removeAllChildren(carouselRootElement);
-            renderPages(pdfDoc, carouselRootElement, maxWidth)
-          });
+          const pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise
+          carouselRootElement.removeChild(document.getElementById("upcardsTemporaryMessageLoadingSlides"));
+          await renderPages(pdfDoc, carouselRootElement);
+          const newWidth = document.body.clientWidth;
+          scaleCanvases(newWidth * maxWidthRatio);
+        }
+
+        /* scaleCanvases : (number) -> promise(unit) */
+        async function scaleCanvases(maxWidth) {
+          if (state === null) {
+            return;
+          } else {
+            for (const element of state.elements) {
+              const { resizeFun } = element;
+              await resizeFun(maxWidth);
+            }
+            return;
+          }
         }
 
         pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
@@ -97,7 +126,8 @@
         const slideUrl = "{{ $slideUrl }}";
         renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
         window.addEventListener('resize', () => {
-          renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
+          const newWidth = document.body.clientWidth;
+          scaleCanvases(newWidth * maxWidthRatio);
         });
       </script>
     {{ else if eq $pageType "image" }}
