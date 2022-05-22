@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
-    {{- partial "head.html" . -}}
-    <body class="d-flex flex-column {{ block "additional-body-class" . }}{{ end }}" style="min-height: 100vh;">
-        {{- partial "header.html" . -}}
-        {{- block "main" . }}{{- end }}
-        {{- partial "footer.html" . -}}
-        {{- partial "script.html" . -}}
-    </body>
+<html lang="{{ .Language }}">
+  {{- partial "head.html" . -}}
+  <body class="d-flex flex-column {{ block "additional-body-class" . }}{{ end }}" style="min-height: 100vh;">
+    {{- partial "header.html" . -}}
+    {{- block "main" . }}{{- end }}
+    {{- partial "footer.html" . -}}
+    {{- partial "script.html" . -}}
+  </body>
 </html>

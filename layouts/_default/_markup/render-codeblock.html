@@ -1,0 +1,11 @@
+{{ $codeBlock := . }}
+{{ $type := $codeBlock.Type }}
+{{ if transform.CanHighlight $type }}
+  <div class="upcards-code-block">
+  {{ highlight ($codeBlock.Inner | safeHTML) $type $codeBlock.Options }}
+  </div>
+{{ else }}
+  <div class="upcards-code-block">
+    <pre><code>{{ $codeBlock.Inner | safeHTML }}</code></pre>
+  </div>
+{{ end }}
