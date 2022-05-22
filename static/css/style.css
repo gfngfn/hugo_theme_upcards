@@ -99,8 +99,8 @@ h2 {
 
 h3 {
   margin-top: 3rem;
-  margin-bottom: 1.4rem;
-  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+  font-size: 1.4rem;
 }
 
 ul.navbar-nav > li {
@@ -116,4 +116,31 @@ ul.dropdown-menu > li {
 li {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+}
+
+.upcards-code-block {
+  margin-bottom: 1rem;
+  background-color: #eeeeee;
+  padding: 0.5rem;
+}
+
+pre {
+  margin-bottom: 0rem;
+}
+
+code {
+  font-size: 0.875em;
+  color: #222222;
+  background-color: #eeeeee;
+  border-radius: 3px;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.chroma code {
+  background-color: inherit;
+  border-radius: 0px;
+  padding: 0rem;
 }
