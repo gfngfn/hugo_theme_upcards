@@ -53,6 +53,11 @@ The path to the thumbnail image relative to `$YOUR_SITE_REPO/static`. No thumbna
 The page type (`"normal"`, `"slides"`, or `"image"`). Default: `"normal"`
 
 
+### `showToc`
+
+Whether the Table of Contents will be displayed or not. Effective when `pageType = "normal"`. Default: `true`
+
+
 ### `slidePath`
 
 The path to the PDF file for slides relative to `$YOUR_SITE_REPO/static`. Effective and mandatory when `pageType = "slides"`.
