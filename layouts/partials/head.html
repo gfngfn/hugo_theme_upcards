@@ -1,8 +1,15 @@
+{{ $page := . }}
+{{ $enableMath := $page.Params.math | default false }}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="{{ absURL "/css/bootstrap.min.css" }}">
   <link rel="stylesheet" type="text/css" href="{{ absURL "/css/style.css" }}">
   <link rel="stylesheet" type="text/css" href="{{ absURL "/css/chroma.css" }}" />
+  {{ if $enableMath }}
+    <link rel="stylesheet" href="{{ absURL "/css/katex.min.css" }}" />
+    <script defer src="{{ absURL "/js/katex.min.js" }}"></script>
+    <script defer src="{{ absURL "/js/katex-auto-render.min.js" }}" onload="renderMathInElement(document.body);"></script>
+  {{ end }}
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ print .Title " - " .Site.Title }}{{ end }} </title>
 </head>

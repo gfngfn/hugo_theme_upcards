@@ -4,6 +4,8 @@
   <div class="upcards-code-block">
   {{ highlight ($codeBlock.Inner | safeHTML) $type $codeBlock.Options }}
   </div>
+{{ else if eq $type "math" }}
+  <p>\[{{ $codeBlock.Inner }}\]</p>
 {{ else }}
   <div class="upcards-code-block">
     <pre><code>{{ $codeBlock.Inner | safeHTML }}</code></pre>

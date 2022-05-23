@@ -103,6 +103,12 @@ h3 {
   font-size: 1.4rem;
 }
 
+h4 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
 ul.navbar-nav > li {
   margin-top: 0rem;
   margin-bottom: 0rem;

@@ -40,6 +40,10 @@ Example:
 ...
 ```
 
+### `tocHeading`
+
+The title for the Table of Contents.
+
 
 ## Theme-specific Front Matter Parameters
 
@@ -89,3 +93,4 @@ Upcards depends on the following libraries:
 - Cole Bemis. [Feather](https://feathericons.com/). Licensed under MIT, 2013-2017.
 - David DeSandro. [Masonry v4.2.2](https://masonry.desandro.com/). Licensed under MIT, 2022.
 - Mozilla Foundation. [PDF.js](https://mozilla.github.io/pdf.js/). Licensed under the Apache License (Version 2.0), 2022.
+- Khan Academy and other contributors. [KaTeX](https://katex.org/). Licensed under MIT, 2013-2020.
