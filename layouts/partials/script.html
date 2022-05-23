@@ -1,3 +1,5 @@
+{{ $page := . }}
+{{ $enableMath := $page.Params.math | default false }}
 <script src="{{ absURL "/js/bootstrap.bundle.min.js" }}"></script>
 <script src="{{ absURL "/js/masonry.pkgd.min.js" }}"></script>
 <script src="{{ absURL "/js/feather.min.js" }}"></script>
@@ -18,3 +20,8 @@
     }
   })
 </script>
+{{ if $enableMath }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+{{ end }}
