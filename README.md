@@ -40,12 +40,33 @@ Example:
 ...
 ```
 
+### `tocHeading`
+
+The title for the Table of Contents.
+
 
 ## Theme-specific Front Matter Parameters
 
 ### `thumbnail`
 
 The path to the thumbnail image relative to `$YOUR_SITE_REPO/static`. No thumbnail image will be displayed if omitted.
+
+
+### `math`
+
+Enables rendering of math formulae using KaTeX if set. Math formulae are written:
+
+````
+The attractive force \\(F\\) between two point-like bodies satisfies:
+
+```
+\begin{align*}
+F = G \frac{M m}{R^2}
+\end{align*}
+```
+
+where \\(G\\) is the gravitational constant.
+````
 
 
 ### `pageType`
@@ -89,3 +110,4 @@ Upcards depends on the following libraries:
 - Cole Bemis. [Feather](https://feathericons.com/). Licensed under MIT, 2013-2017.
 - David DeSandro. [Masonry v4.2.2](https://masonry.desandro.com/). Licensed under MIT, 2022.
 - Mozilla Foundation. [PDF.js](https://mozilla.github.io/pdf.js/). Licensed under the Apache License (Version 2.0), 2022.
+- Khan Academy and other contributors. [KaTeX](https://katex.org/). Licensed under MIT, 2013-2020.
