@@ -54,7 +54,7 @@ The path to the thumbnail image relative to `$YOUR_SITE_REPO/static`. No thumbna
 
 ### `math`
 
-Enables rendering of math formulae using KaTeX if set. Math formulae are written:
+Enables rendering of math formulae using KaTeX if set. Math formulae are supposed to be written like the following:
 
 ````
 The attractive force \\(F\\) between two point-like bodies satisfies:

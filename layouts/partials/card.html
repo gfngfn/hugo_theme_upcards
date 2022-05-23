@@ -27,7 +27,7 @@
         <img class="card-img-top" src={{ absURL $thumbnail }} />
       {{ end }}
       <div class="card-body">
-        <h4 class="card-title"><a href="{{ $page.RelPermalink }}" class="{{ $linkClass }}">{{ $page.Title }}</a></h4>
+        <h4 class="mt-0 card-title"><a href="{{ $page.RelPermalink }}" class="{{ $linkClass }}">{{ $page.Title }}</a></h4>
         <div class="upcards-time-section">
           <time datetime="{{ $publishDate.Format "2006-01-02" }}">{{ $formattedPublishDate }}</time>
         </div>
