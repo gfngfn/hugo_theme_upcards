@@ -52,6 +52,23 @@ The title for the Table of Contents.
 The path to the thumbnail image relative to `$YOUR_SITE_REPO/static`. No thumbnail image will be displayed if omitted.
 
 
+### `math`
+
+Enables rendering of math formulae using KaTeX if set. Math formulae are written:
+
+````
+The attractive force \\(F\\) between two point-like bodies satisfies:
+
+```
+\begin{align*}
+F = G \frac{M m}{R^2}
+\end{align*}
+```
+
+where \\(G\\) is the gravitational constant.
+````
+
+
 ### `pageType`
 
 The page type (`"normal"`, `"slides"`, or `"image"`). Default: `"normal"`
