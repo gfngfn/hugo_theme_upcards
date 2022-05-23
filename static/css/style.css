@@ -144,3 +144,20 @@ code {
   border-radius: 0px;
   padding: 0rem;
 }
+
+.upcards-toc {
+  position: fixed;
+  top: 1rem;
+  right: 0rem;
+  margin: 1rem;
+  max-width: 18rem;
+  border-top: 0.5rem solid #eeeeee;
+  border-bottom: 0.5rem solid #eeeeee;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.upcards-toc li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
