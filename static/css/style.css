@@ -144,3 +144,28 @@ code {
   border-radius: 0px;
   padding: 0rem;
 }
+
+.upcards-toc {
+  position: fixed;
+  right: 2rem;
+  max-width: 16rem;
+  border-left: 0.5rem solid #eeeeee;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 0.875em;
+}
+
+.upcards-toc li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.upcards-toc a {
+  color: #888888;
+}
+
+@media all and (max-width: 1250px) {
+  .upcards-toc {
+    display: none;
+  }
+}

@@ -1,0 +1,128 @@
+{{ $page := . }}
+{{ $slideUrl := absURL $page.Params.slidePath | safeURL }}
+<div id="slideCarouselControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+  <div id="slideCarouselRoot" class="carousel-inner">
+    <div id="upcardsTemporaryMessageLoadingSlides" class="bg-secondary upcards-loading-slides">
+      <span>Loading slides...</span>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#slideCarouselControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#slideCarouselControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<div class="jumbotron bg-light upcards-slide-heading">
+  <div class="mx-auto upcards-single-board">
+    <h1 class="upcards-slide-title">{{ $page.Title }}</h1>
+    <p><i data-feather="download"></i><a href="{{ $slideUrl }}">PDF</a></p>
+    {{ if eq $page.Section "posts" }}
+      {{ partial "metadata.html" $page }}
+    {{ end }}
+  </div>
+</div>
+<div class="upcards-single-content">
+  <div class="mx-auto upcards-single-board">
+    {{ $page.Content }}
+  </div>
+</div>
+<script type="text/javascript" src="{{ absURL "/js/pdf.js" | safeURL }}"></script>
+<script type="text/javascript">
+  /* type element = { resizeFun : (maxWidth: number) -> promise(unit) } */
+
+  /* state : null | { elements : list(element) } */
+  var state = null;
+
+  /* getNewSize : (number, number, number) -> { newWidth: int, newHeight: int } */
+  function getNewSize(rawWidth, rawHeight, maxWidth) {
+    if (rawWidth > maxWidth) {
+      const scale = maxWidth / rawWidth;
+      return { newWidth: maxWidth, newHeight: rawHeight * scale };
+    } else {
+      return { newWidth: rawWidth, newHeight: rawHeight };
+    }
+  }
+
+  /* renderPage : (page, domElement) -> element */
+  async function renderPage(page, containerElement) {
+    const rawViewport = page.getViewport({ scale: 1 });
+    const rawWidth = rawViewport.width;
+    const rawHeight = rawViewport.height;
+
+    var canvas = document.createElement('canvas');
+    canvas.style = "display: block;";
+    canvas.className = "mx-auto";
+    canvas.width = rawWidth;
+    canvas.height = rawHeight;
+    containerElement.appendChild(canvas);
+
+    var ctx = canvas.getContext('2d');
+    var renderContext = { canvasContext: ctx, viewport: rawViewport };
+    await page.render(renderContext).promise;
+
+    /* resizeFun : (maxWidth: number) -> promise(unit) */
+    const resizeFun = async (maxWidth) => {
+      const { newWidth, newHeight } = getNewSize(rawWidth, rawHeight, maxWidth);
+      canvas.style.width = `${newWidth}px`;
+      canvas.style.height = `${newHeight}px`;
+      return;
+    };
+    return { resizeFun: resizeFun };
+  }
+
+  /* renderPages : (pdf, domElement) -> promise(unit) */
+  async function renderPages(pdfDoc, carouselRootElement) {
+    var elements = [];
+    for (var num = 1; num <= pdfDoc.numPages; num++) {
+      const isActive = (num === 1);
+      const page = await pdfDoc.getPage(num);
+      var itemElement = document.createElement('div');
+      if (isActive) {
+        itemElement.className = 'carousel-item bg-secondary active';
+      } else {
+        itemElement.className = 'carousel-item bg-secondary';
+      }
+      const element = await renderPage(page, itemElement);
+      elements.push(element);
+      carouselRootElement.appendChild(itemElement);
+    }
+    state = { elements: elements };
+    return;
+  }
+
+  /* renderPdf : (pdfUrl: string, domElement) -> promise(unit) */
+  async function renderPdf(pdfUrl, carouselRootElement) {
+    pdfjsLib.disableWorker = true;
+    const pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise
+    carouselRootElement.removeChild(document.getElementById("upcardsTemporaryMessageLoadingSlides"));
+    await renderPages(pdfDoc, carouselRootElement);
+    const newWidth = document.body.clientWidth;
+    scaleCanvases(newWidth * maxWidthRatio);
+  }
+
+  /* scaleCanvases : (number) -> promise(unit) */
+  async function scaleCanvases(maxWidth) {
+    if (state === null) {
+      return;
+    } else {
+      for (const element of state.elements) {
+        const { resizeFun } = element;
+        await resizeFun(maxWidth);
+      }
+      return;
+    }
+  }
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ absURL "/js/pdf.worker.js" | safeURL }}";
+  var carouselRootElement = document.getElementById("slideCarouselRoot");
+  const maxWidthRatio = 0.9;
+  const slideUrl = "{{ $slideUrl }}";
+  renderPdf(slideUrl, carouselRootElement, screen.width * maxWidthRatio);
+  window.addEventListener('resize', () => {
+    const newWidth = document.body.clientWidth;
+    scaleCanvases(newWidth * maxWidthRatio);
+  });
+</script>
