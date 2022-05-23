@@ -1,0 +1,14 @@
+{{ $page := . }}
+<div class="jumbotron bg-light upcards-single-heading">
+  <div class="mx-auto upcards-single-board">
+    <h1 class="upcards-single-board-title">{{ $page.Title }}</h1>
+    {{ if eq $page.Section "posts" }}
+      {{ partial "metadata.html" $page }}
+    {{ end }}
+  </div>
+</div>
+<div class="upcards-single-content">
+  <div class="mx-auto upcards-single-board">
+    {{ $page.Content }}
+  </div>
+</div>

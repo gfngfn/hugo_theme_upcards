@@ -1,0 +1,20 @@
+{{ $page := . }}
+<div class="d-flex flex-wrap justify-content-center bg-light">
+  {{ range $imageRelPath := $page.Params.imagePaths -}}
+    {{- $imageUrl := absURL $imageRelPath | safeURL -}}
+    <div class="card m-3">
+      <a href="{{ $imageUrl }}"><img src="{{ $imageUrl }}" class="upcards-displayed-image" /></a>
+    </div>
+  {{- end }}
+</div>
+<div class="upcards-single-heading">
+  <div class="mx-auto upcards-single-board">
+    <h1 class="upcards-single-board-title">{{ $page.Title }}</h1>
+    {{ if eq $page.Section "posts" }}
+      {{ partial "metadata.html" $page }}
+    {{ end }}
+  </div>
+  <div class="mt-3 mx-auto upcards-single-board">
+    {{ $page.Content }}
+  </div>
+</div>
