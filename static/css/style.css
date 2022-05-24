@@ -130,6 +130,10 @@ li {
   padding: 0.5rem;
 }
 
+.upcards-math-block {
+  overflow-x: auto;
+}
+
 pre {
   margin-bottom: 0rem;
 }
