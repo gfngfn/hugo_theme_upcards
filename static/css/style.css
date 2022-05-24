@@ -172,6 +172,12 @@ code {
 
 .upcards-toc a {
   color: #888888;
+  text-decoration: none;
+}
+
+.upcards-toc a:hover {
+  color: #88AAFF;
+  text-decoration: underline;
 }
 
 @media all and (max-width: 1250px) {
