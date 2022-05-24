@@ -130,6 +130,10 @@ li {
   padding: 0.5rem;
 }
 
+.upcards-math-block {
+  overflow-x: auto;
+}
+
 pre {
   margin-bottom: 0rem;
 }
@@ -168,6 +172,12 @@ code {
 
 .upcards-toc a {
   color: #888888;
+  text-decoration: none;
+}
+
+.upcards-toc a:hover {
+  color: #88AAFF;
+  text-decoration: underline;
 }
 
 @media all and (max-width: 1250px) {
