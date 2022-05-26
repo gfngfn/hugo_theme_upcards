@@ -1,5 +1,7 @@
 # Upcards - A Simple Card-Based Hugo Theme
 
+See [`gfngfn.github.io`](https://gfngfn.github.io/) for example.
+
 **Note: this Hugo theme is currently developed solely for the developer’s personal use.** Feel free to use it, but please note that its functionality and appearance are subject to change.
 
 
@@ -42,7 +44,7 @@ Example:
 
 ### `tocHeading`
 
-The title for the Table of Contents.
+The title for the Table of Contents (see also the shortcode `{{< toc >}}`). Default: `"Contents"`
 
 
 ## Theme-specific Front Matter Parameters
@@ -74,11 +76,6 @@ where \\(G\\) is the gravitational constant.
 The page type (`"normal"`, `"slides"`, or `"image"`). Default: `"normal"`
 
 
-### `showToc`
-
-Whether the Table of Contents will be displayed or not. Effective when `pageType = "normal"`. Default: `true`
-
-
 ### `slidePath`
 
 The path to the PDF file for slides relative to `$YOUR_SITE_REPO/static`. Effective and mandatory when `pageType = "slides"`.
@@ -100,6 +97,13 @@ Effective when `pageType = "slides"`. Titles of presentations will be displayed 
 ### `imagePaths`
 
 The list of paths to the image files relative to `$YOUR_SITE_REPO/static`. Effective when `pageType = "image"`.
+
+
+## Theme-specific Shortcodes
+
+### `{{< toc >}}`
+
+Inserts the Table of Contents. The resulting listing will be shown on where `{{< toc >}}` is written if the screen is relatively narrow (specifically, narrower than 1250px; e.g. smartphone screens), or on the right corner of the viewport otherwise (e.g. display devices for desktop PCs).
 
 
 ## Dependencies and Their License
