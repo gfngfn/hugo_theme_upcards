@@ -1,6 +1,6 @@
 {{ $page := . }}
 {{ $showToc := $page.Params.showToc | default true }}
-<div class="jumbotron bg-light upcards-single-heading">
+<div id="articleHeading" class="jumbotron bg-light upcards-single-heading">
   <div class="mx-auto upcards-single-board">
     <h1 class="upcards-single-board-title">{{ $page.Title }}</h1>
     {{ if eq $page.Section "posts" }}
@@ -8,22 +8,16 @@
     {{ end }}
   </div>
 </div>
-{{ if $showToc }}
-  <div id="toc" class="upcards-toc px-3">
-    <h3 class="mt-0">{{ $page.Site.Params.tocHeading }}</h3>
-    {{ $page.TableOfContents }}
-  </div>
-{{ end }}
 <div class="upcards-single-content">
   <div class="mx-auto upcards-single-board">
     {{ $page.Content }}
   </div>
 </div>
 <script type="text/javascript">
-  const minScrollForFixed = 300;
+  const pageNavbarHeight = 50;
   const fixedTop = 30;
 
-  function setTocPosition() {
+  function setTocPosition(minScrollForFixed) {
     const scrollTop = document.documentElement.scrollTop;
     if (scrollTop < minScrollForFixed) {
       tocElement.style.top = "" + (fixedTop + (minScrollForFixed - scrollTop)) + "px";
@@ -33,6 +27,12 @@
     return;
   }
   const tocElement = document.getElementById("toc");
-  window.addEventListener('scroll', (event) => { setTocPosition(); });
-  setTocPosition();
+  if (tocElement !== null) {
+    window.addEventListener('load', (event) => {
+      const articleHeadingHeight = document.getElementById("articleHeading").offsetHeight;
+      const minScrollForFixed = articleHeadingHeight + pageNavbarHeight;
+      window.addEventListener('scroll', (event) => { setTocPosition(minScrollForFixed); });
+      setTocPosition(minScrollForFixed);
+    })
+  }
 </script>
