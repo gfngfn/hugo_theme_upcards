@@ -155,14 +155,29 @@ code {
   padding: 0rem;
 }
 
-.upcards-toc {
-  position: fixed;
-  right: 2rem;
-  max-width: 16rem;
-  border-left: 0.5rem solid #eeeeee;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  font-size: 0.875em;
+/* For wide displays */
+@media screen and (min-width: 1250px) {
+  .upcards-toc {
+    position: fixed;
+    right: 2rem;
+    max-width: 16rem;
+    border-left: 0.5rem solid #eeeeee;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.875em;
+  }
+}
+
+
+/* For other media */
+@media not screen and (min-width: 1250px) {
+  .upcards-toc {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-left: 0.5rem solid #eeeeee;
+    padding-left: 1rem;
+    font-size: 0.875em;
+  }
 }
 
 .upcards-toc li {
@@ -178,10 +193,4 @@ code {
 .upcards-toc a:hover {
   color: #88AAFF;
   text-decoration: underline;
-}
-
-@media all and (max-width: 1250px) {
-  .upcards-toc {
-    display: none;
-  }
 }

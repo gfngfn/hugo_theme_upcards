@@ -1,0 +1,5 @@
+{{ $page := $.Page }}
+<div id="toc" class="upcards-toc px-3">
+  <h3 class="mt-0">{{ $page.Site.Params.tocHeading | default "Contents" }}</h3>
+  {{ $page.TableOfContents }}
+</div>
