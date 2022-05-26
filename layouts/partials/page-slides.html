@@ -1,5 +1,6 @@
 {{ $page := . }}
 {{ $slideUrl := absURL $page.Params.slidePath | safeURL }}
+{{ $showTwitterShareButton := $page.Site.Params.showTwitterShareButton }}
 <div id="slideCarouselControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
   <div id="slideCarouselRoot" class="carousel-inner">
     <div id="upcardsTemporaryMessageLoadingSlides" class="bg-secondary upcards-loading-slides">
@@ -18,10 +19,19 @@
 <div class="jumbotron bg-light upcards-slide-heading">
   <div class="mx-auto upcards-single-board">
     <h1 class="upcards-slide-title">{{ $page.Title }}</h1>
-    <p><i data-feather="download"></i><a href="{{ $slideUrl }}">PDF</a></p>
     {{ if eq $page.Section "posts" }}
       {{ partial "metadata.html" $page }}
     {{ end }}
+    <div class="d-flex align-items-center gap-3 mt-3">
+      <div class="align-middle">
+        <i data-feather="download"></i> <a href="{{ $slideUrl }}">PDF</a>
+      </div>
+      {{ if $showTwitterShareButton }}
+        <div class="align-middle">
+          {{ partial "twitter-share-button.html" $page }}
+        </div>
+      {{ end }}
+    </div>
   </div>
 </div>
 <div class="upcards-single-content">
@@ -126,3 +136,6 @@
     scaleCanvases(newWidth * maxWidthRatio);
   });
 </script>
+{{ if $showTwitterShareButton }}
+  {{ partial "twitter-widgets" $page }}
+{{ end }}
