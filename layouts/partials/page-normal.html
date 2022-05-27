@@ -5,9 +5,9 @@
     <h1 class="upcards-single-board-title">{{ $page.Title }}</h1>
     {{ if eq $page.Section "posts" }}
       {{ partial "metadata.html" $page }}
-    {{ end }}
-    {{ if $showTwitterShareButton }}
-      <div class="mt-3">{{ partial "twitter-share-button.html" $page }}</div>
+      {{ if $showTwitterShareButton }}
+        <div class="mt-3">{{ partial "twitter-share-button.html" $page }}</div>
+      {{ end }}
     {{ end }}
   </div>
 </div>

@@ -106,6 +106,19 @@ The list of paths to the image files relative to `$YOUR_SITE_REPO/static`. Effec
 Inserts the Table of Contents. The resulting listing will be shown on where `{{< toc >}}` is written if the screen is relatively narrow (specifically, narrower than 1250px; e.g. smartphone screens), or on the right corner of the viewport otherwise (e.g. display devices for desktop PCs).
 
 
+### `{{< github-repo user="…" repo="…" >}}`
+
+Displays a card of a GitHub repository by using [`gh-card.dev`](https://gh-card.dev).
+
+Example:
+
+```
+{{< github-repo user="gfngfn" repo="hugo_theme_upcards" >}}
+```
+
+<img src="https://gh-card.dev/repos/gfngfn/hugo_theme_upcards.svg" />
+
+
 ## Dependencies and Their License
 
 Upcards depends on the following libraries:
