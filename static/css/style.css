@@ -149,6 +149,12 @@ code {
   padding-right: 0.25rem;
 }
 
+blockquote {
+  color: #888888;
+  padding-left: 1rem;
+  border-left: 0.5rem solid #eeeeee;
+}
+
 .chroma code {
   background-color: inherit;
   border-radius: 0px;
