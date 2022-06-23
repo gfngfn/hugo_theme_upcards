@@ -6,8 +6,13 @@
   </div>
 {{ else if eq $type "console" }}
   <div class="upcards-console-block"><pre><code>{{- $codeBlock.Inner | safeHTML -}}</code></pre></div>
-{{ else if transform.CanHighlight $type }}
-  <div class="upcards-code-block">{{- highlight ($codeBlock.Inner | safeHTML) $type $codeBlock.Options -}}</div>
 {{ else }}
+  {{ with $filename := $codeBlock.Attributes.filename }}
+    <div class="upcards-code-block-filename-panel"><pre><code>{{ $filename | safeHTML }}</code></pre></div>
+  {{ end }}
+  {{ if transform.CanHighlight $type }}
+  <div class="upcards-code-block">{{- highlight ($codeBlock.Inner | safeHTML) $type $codeBlock.Options -}}</div>
+  {{ else }}
   <div class="upcards-code-block"><pre><code>{{- $codeBlock.Inner | safeHTML -}}</code></pre></div>
+  {{ end }}
 {{ end }}
