@@ -130,6 +130,23 @@ li {
   padding: 0.5rem;
 }
 
+.upcards-code-block code {
+  background-color: transparent;
+  padding: 0px;
+}
+
+.upcards-console-block {
+  margin-bottom: 1rem;
+  background-color: #444444;
+  color: #eeeeee;
+  padding: 0.5rem;
+}
+
+.upcards-console-block code {
+  background-color: transparent;
+  padding: 0px;
+}
+
 .upcards-math-block {
   overflow-x: auto;
 }
