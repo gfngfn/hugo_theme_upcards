@@ -1,15 +1,18 @@
 {{ $codeBlock := . }}
 {{ $type := $codeBlock.Type }}
-{{ if transform.CanHighlight $type }}
-  <div class="upcards-code-block">
-  {{ highlight ($codeBlock.Inner | safeHTML) $type $codeBlock.Options }}
-  </div>
-{{ else if eq $type "math" }}
+{{ if eq $type "math" }}
   <div class="upcards-math-block">
     <p>\[{{ $codeBlock.Inner }}\]</p>
   </div>
+{{ else if eq $type "console" }}
+  <div class="upcards-console-block"><pre><code>{{- $codeBlock.Inner | safeHTML -}}</code></pre></div>
 {{ else }}
-  <div class="upcards-code-block">
-    <pre><code>{{ $codeBlock.Inner | safeHTML }}</code></pre>
-  </div>
+  {{ with $filename := $codeBlock.Attributes.filename }}
+    <div class="upcards-code-block-filename-panel"><pre><code>{{ $filename | safeHTML }}</code></pre></div>
+  {{ end }}
+  {{ if transform.CanHighlight $type }}
+  <div class="upcards-code-block">{{- highlight ($codeBlock.Inner | safeHTML) $type $codeBlock.Options -}}</div>
+  {{ else }}
+  <div class="upcards-code-block"><pre><code>{{- $codeBlock.Inner | safeHTML -}}</code></pre></div>
+  {{ end }}
 {{ end }}

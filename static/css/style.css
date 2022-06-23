@@ -130,8 +130,39 @@ li {
   padding: 0.5rem;
 }
 
+.upcards-code-block code {
+  background-color: transparent;
+  padding: 0px;
+}
+
+.upcards-console-block {
+  margin-bottom: 1rem;
+  background-color: #444444;
+  color: #eeeeee;
+  padding: 0.5rem;
+}
+
+.upcards-console-block code {
+  background-color: transparent;
+  padding: 0px;
+}
+
 .upcards-math-block {
   overflow-x: auto;
+}
+
+.upcards-code-block-filename-panel {
+  background-color: #dddddd;
+  padding-left: 0.5rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+/*  border-bottom: solid 4px #cccccc; */
+  margin-bottom: 0px;
+}
+
+.upcards-code-block-filename-panel code {
+  background-color: transparent;
+  padding: 0px;
 }
 
 pre {
