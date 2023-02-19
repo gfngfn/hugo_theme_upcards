@@ -4,5 +4,9 @@
   {{ $count := $tag_entry.Count }}
   {{ $href := print (absLangURL "tags/") (urlize $tag) }}
   {{ $.Site.Taxonomies.Term }}
-  <a class="btn btn-sm btn-outline-dark tag-btn upcards-tag-button" href="{{ $href }}">{{ $tag }} ({{ $count }})</a>
+  {{ with $tagText := index $.Site.Params.tagTexts $tag }}
+    <a class="btn btn-sm btn-outline-dark tag-btn upcards-tag-button" href="{{ $href }}">{{ $tagText }}<span class="upcards-page-count-subscript"> {{ $count }}</span></a>
+  {{ else }}
+    {{ warnf "undefined tag %q; add it to `languages.foo.tagTexts` in your config" $tag }}
+  {{ end }}
 {{ end }}

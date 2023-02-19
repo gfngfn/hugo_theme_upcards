@@ -58,13 +58,18 @@ img.upcards-displayed-image {
 }
 
 div.upcards-time-section {
-  color: #AAAAAA;
+  color: #aaaaaa;
   margin-bottom: 0.5rem;
 }
 
 p.upcards-time {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+span.upcards-page-count-subscript {
+  color: #888888;
+  font-size: 0.6em;
 }
 
 h1 {
