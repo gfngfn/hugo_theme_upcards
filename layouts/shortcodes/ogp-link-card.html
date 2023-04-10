@@ -1,0 +1,22 @@
+{{ $url := .Get "url" }}
+{{ $html := resources.GetRemote $url }}
+{{ $content := $html.Content }}
+{{ $head := strings.ReplaceRE `(?s).*?<head.*?>(.*?)</head>.*` "$1" $content }}
+{{ $title := strings.ReplaceRE `(?s).*?<meta\s+property=\"og:title\"\s+content=\"(.*?)\".*` "$1" $head }}
+{{ $imageUrl := strings.ReplaceRE `(?s).*?<meta\s+property=\"og:image\"\s+content=\"(.*?)\".*` "$1" $head }}
+{{ $description := strings.ReplaceRE `(?s).*?<meta\s+property=\"og:description\"\s+content=\"(.*?)\".*` "$1" $head }}
+<div class="upcards-ogp-link-card">
+  <a href="{{ $url | safeHTMLAttr }}" target="_blank"></a>
+  <div class="upcards-ogp-link-card-left">
+    <img src="{{ $imageUrl | safeHTMLAttr }}"/>
+  </div>
+  <div class="upcards-ogp-link-card-right upcards-ogp-link-card-title">
+    {{ $title }}
+  </div>
+  <div class="upcards-ogp-link-card-right upcards-ogp-link-card-url">
+    {{ $url }}
+  </div>
+  <div class="upcards-ogp-link-card-right upcards-ogp-link-card-description">
+    {{ $description }}
+  </div>
+</div>
