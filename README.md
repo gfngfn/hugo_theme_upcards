@@ -75,7 +75,7 @@ The path to the thumbnail image relative to `$YOUR_SITE_REPO/static`. No thumbna
 
 ### `math`
 
-Enables rendering of math formulae using KaTeX if set. Math formulae are supposed to be written like the following:
+Enables rendering of math formulae using KaTeX if set to `true` (Default: `false`). Math formulae are supposed to be written like the following:
 
 ````
 The attractive force \\(F\\) between two point-like bodies satisfies:
@@ -136,6 +136,11 @@ Example:
 ```
 
 <img src="https://gh-card.dev/repos/gfngfn/hugo_theme_upcards.svg" />
+
+
+### `{{< ogp-link-card url="…" >}}`
+
+Creates a link that displays the OGP image provided by the destination page.
 
 
 ## Dependencies and Their License
