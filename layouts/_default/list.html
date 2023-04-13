@@ -2,7 +2,12 @@
 {{ define "main" }}
   <main class="mb-auto pb-5">
     <div class="mt-5 mb-4 mx-auto upcards-tag-board">
-      <h1 class="upcards-list-title">{{ .Title }}</h1>
+        {{ $tag := .Title }}
+        {{ with $tagText := index $.Site.Params.tagTexts $tag }}
+          <h1 class="upcards-list-title">{{ $tagText }}</h1>
+        {{ else }}
+          {{ warnf "undefined tag %q; add it to `languages.foo.tagTexts` in your config" $tag }}
+        {{ end }}
       {{ partial "tags.html" . }}
     </div>
     <div class="mx-auto upcards-list-board">

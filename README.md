@@ -26,6 +26,25 @@ i.e., it expects the tag to be the sole taxonomy and the pages for taxonimies or
 
 ## Theme-specific Configuration Parameters
 
+### `tagTexts`
+
+Defines how each tag should be rendered. **This section is mandatory; all the tags must be specified in this section in your config file**.
+
+Example:
+
+```toml
+...
+
+[languages]
+  [languages.en]
+    ...
+    [languages.en.tagTexts]
+      web-design = "Web design"
+      latex = "LaTeX"
+      ...
+...
+```
+
 ### `lastmodPre`/`lastmodPost`
 
 The prefix/suffix for displaying last modified datetimes.

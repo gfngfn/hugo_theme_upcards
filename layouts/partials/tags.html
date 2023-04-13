@@ -1,9 +1,12 @@
 <i data-feather="tag"></i>Tags:
-{{ range $taxonomy_name, $taxonomy := $.Site.Taxonomies }}
-  {{ if eq $taxonomy_name "tags" }}
-    {{ range $tag, $value := $taxonomy }}
-      {{ $href := print (absLangURL "tags/") (urlize $tag) }}
-      <a class="btn btn-sm btn-outline-dark tag-btn upcards-tag-button" href="{{ $href }}">{{ $tag }}</a>
-    {{ end }}
+{{ range $tag_entry := $.Site.Taxonomies.tags.ByCount }}
+  {{ $tag := $tag_entry.Name }}
+  {{ $count := $tag_entry.Count }}
+  {{ $href := print (absLangURL "tags/") (urlize $tag) }}
+  {{ $.Site.Taxonomies.Term }}
+  {{ with $tagText := index $.Site.Params.tagTexts $tag }}
+    <a class="btn btn-sm btn-outline-dark tag-btn upcards-tag-button" href="{{ $href }}">{{ $tagText }}<span class="upcards-page-count-subscript"> {{ $count }}</span></a>
+  {{ else }}
+    {{ warnf "undefined tag %q; add it to `languages.foo.tagTexts` in your config" $tag }}
   {{ end }}
 {{ end }}
