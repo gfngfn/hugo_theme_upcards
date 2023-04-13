@@ -241,3 +241,66 @@ div.footnotes {
   color: #88AAFF;
   text-decoration: underline;
 }
+
+.upcards-ogp-link-card {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 122px;
+  grid-template-rows: 1fr 1fr 3fr;
+  grid-template-columns: 120px 1fr;
+  background: #f8f8f8;
+  border-radius: 10px 10px 10px 10px;
+  border: solid 1px #dddddd;
+  margin-bottom: 1em;
+}
+
+.upcards-ogp-link-card-left {
+  grid-row: 1 / 3;
+  grid-column: 1 / 2;
+  border-radius: 10px 0 0 10px;
+}
+
+.upcards-ogp-link-card-title {
+  grid-row: 1;
+  grid-column: 2;
+  margin-top: 0.8em;
+  margin-left: 1em;
+  color: #666666;
+}
+
+.upcards-ogp-link-card-url {
+  grid-row: 2;
+  grid-column: 2;
+  color: #aaaaaa;
+  margin-left: 1.3em;
+  font-size: 0.8em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.upcards-ogp-link-card-description {
+  grid-row: 3;
+  grid-column: 2;
+  margin: 0.3em;
+  margin-left: 1.3em;
+  font-size: 0.8em;
+  color: #666666;
+  overflow: hidden;
+}
+
+.upcards-ogp-link-card a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height:100%;
+  width: 100%;
+}
+
+.upcards-ogp-link-card img {
+  max-width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 10px 0 0 10px;
+}
