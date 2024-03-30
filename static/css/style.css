@@ -152,6 +152,12 @@ li {
   padding: 0px;
 }
 
+/*| Cancels the bottom margin of a paragraph
+  | if a display math formula follows the paragraph. */
+p:has(+ .upcards-math-block) {
+  margin-bottom: 0px;
+}
+
 .upcards-math-block {
   overflow-x: auto;
 }
