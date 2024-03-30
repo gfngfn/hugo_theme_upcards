@@ -305,8 +305,8 @@ div.footnotes {
   border-radius: 10px 0 0 10px;
 }
 
-/* For disabling underlines on GitHub repository cards:
 .upcards-github-repo-card svg a {
+/* For disabling underlines on GitHub repository cards:
   text-decoration: none;
-}
 */
+}
