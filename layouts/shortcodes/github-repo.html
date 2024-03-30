@@ -1,3 +1,8 @@
 {{ $user := .Get "user" }}
 {{ $repo := .Get "repo" }}
-<p><a href="https://github.com/{{ $user }}/{{ $repo }}"><img src="https://gh-card.dev/repos/{{ $user }}/{{ $repo }}.svg" style="max-width: 100%;" /></a></p>
+{{ $url := printf "https://gh-card.dev/repos/%s/%s.svg" $user $repo }}
+{{ $svg := resources.GetRemote $url }}
+{{ $svgContent := $svg.Content }}
+<p class="upcards-github-repo-card">
+  <a href="https://github.com/{{ $user }}/{{ $repo }}">{{ $svgContent | safeHTML }}</a>
+</p>
