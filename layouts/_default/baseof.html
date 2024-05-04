@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ .Language }}">
   {{- partial "head.html" . -}}
-  <body class="d-flex flex-column {{ block "additional-body-class" . }}{{ end }}" style="min-height: 100vh;">
+  <body class="d-flex flex-column upcards-body {{ block "additional-body-class" . }}{{ end }}">
     {{- partial "header.html" . -}}
     {{- block "main" . }}{{- end }}
     {{- partial "footer.html" . -}}
