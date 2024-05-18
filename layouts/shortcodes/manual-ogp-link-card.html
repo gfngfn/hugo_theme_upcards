@@ -1,0 +1,19 @@
+{{ $url := .Get "url" }}
+{{ $title := .Get "title" }}
+{{ $imageUrl := .Get "imageUrl" }}
+{{ $description := .Get "description" }}
+<div class="upcards-ogp-link-card">
+  <a href="{{ $url | safeHTMLAttr }}" target="_blank"></a>
+  <div class="upcards-ogp-link-card-left">
+    <img src="{{ $imageUrl | safeHTMLAttr }}"/>
+  </div>
+  <div class="upcards-ogp-link-card-right upcards-ogp-link-card-title">
+    {{ $title }}
+  </div>
+  <div class="upcards-ogp-link-card-right upcards-ogp-link-card-url">
+    {{ $url }}
+  </div>
+  <div class="upcards-ogp-link-card-right upcards-ogp-link-card-description">
+    {{ $description }}
+  </div>
+</div>

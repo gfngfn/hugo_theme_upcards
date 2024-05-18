@@ -31,7 +31,15 @@
         <div class="upcards-time-section">
           <time datetime="{{ $publishDate.Format "2006-01-02" }}">{{ $formattedPublishDate }}</time>
         </div>
-        {{ $page.Summary }}
+        {{ if $page.Site.Params.justifySummary }}
+          <div class="upcards-summary-section-justified">
+            {{ $page.Summary }}
+          </div>
+        {{ else }}
+          <div class="upcards-summary-section-flushleft">
+            {{ $page.Summary }}
+          </div>
+        {{ end }}
       </div>
     {{ end }}
   </div>
