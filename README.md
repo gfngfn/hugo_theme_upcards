@@ -66,6 +66,11 @@ Example:
 The title for the Table of Contents (see also the shortcode `{{< toc >}}`). Default: `"Contents"`
 
 
+### `justifySummary`
+
+Whether `text-align: justify;` is applied to the summary on each card.
+
+
 ## Theme-specific Front Matter Parameters
 
 ### `thumbnail`
@@ -140,7 +145,12 @@ Example:
 
 ### `{{< ogp-link-card url="…" >}}`
 
-Creates a link that displays the OGP image provided by the destination page.
+Creates a link that displays the OGP image provided by the destination page. The title, the thumbnail image, and the description of the page are automatically obtained and displayed.
+
+
+### `{{< manual-ogp-link-card url="…" title="…" imageUrl="…" description="…" >}}`
+
+A manual version of `ogp-link-card`. Useful when the link requires some authentication or redirection.
 
 
 ## Dependencies and Their License

@@ -36,6 +36,7 @@
   padding-top: 2rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  text-align: justify;
 }
 
 .upcards-single-board {
@@ -62,6 +63,15 @@ div.upcards-time-section {
   margin-bottom: 0.5rem;
 }
 
+div.upcards-summary-section-justified {
+  font-size: 0.925em;
+  text-align: justify;
+}
+
+div.upcards-summary-section-flushleft {
+  font-size: 0.875em;
+}
+
 p.upcards-time {
   margin-top: 0;
   margin-bottom: 0;
@@ -74,7 +84,6 @@ span.upcards-page-count-subscript {
 
 body.upcards-body {
   min-height: 100vh;
-  text-align: justify;
   text-spacing-trim: trim-start; /* TODO: change this to `trim-all` in the future */
   text-autospace: ideograph-alpha;
 }
@@ -266,6 +275,7 @@ div.footnotes {
   border-radius: 10px 10px 10px 10px;
   border: solid 1px #dddddd;
   margin-bottom: 1em;
+  text-align: start;
 }
 
 .upcards-ogp-link-card-left {
