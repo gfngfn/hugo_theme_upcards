@@ -234,6 +234,7 @@ div.footnotes {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     font-size: 0.875em;
+    text-align: start;
   }
 }
 
@@ -246,6 +247,7 @@ div.footnotes {
     border-left: 0.5rem solid #eeeeee;
     padding-left: 1rem;
     font-size: 0.875em;
+    text-align: start;
   }
 }
 
