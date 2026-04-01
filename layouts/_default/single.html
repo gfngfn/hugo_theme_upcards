@@ -4,6 +4,8 @@
   <main class="mb-auto pb-5">
     {{ if eq $pageType "slides" }}
       {{ partial "page-slides.html" $page }}
+    {{ else if eq $pageType "document" }}
+      {{ partial "page-document.html" $page }}
     {{ else if eq $pageType "image" }}
       {{ partial "page-image.html" $page }}
     {{ else if eq $pageType "normal" }}

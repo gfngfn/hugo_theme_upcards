@@ -97,7 +97,7 @@ where \\(G\\) is the gravitational constant.
 
 ### `pageType`
 
-The page type (`"normal"`, `"slides"`, or `"image"`). Default: `"normal"`
+The page type (`"normal"`, `"slides"`, `"document"`, or `"image"`). Default: `"normal"`
 
 
 ### `slidePath`
@@ -115,12 +115,22 @@ slidePath: "/media/slides.pdf"
 
 ### `showTitleOnCard`
 
-Effective when `pageType = "slides"`. Titles of presentations will be displayed on cards if this option is set. Default: `false` (i.e. titles are not displayed on slide cards)
+Effective when `pageType` is not `"normal"`. Titles of presentations will be displayed on cards if this option is set. Default: `false` (i.e. the corresponding card displays the thumbnail image without showing the title below)
 
 
 ### `imagePaths`
 
 The list of paths to the image files relative to `$YOUR_SITE_REPO/static`. Effective when `pageType = "image"`.
+
+
+### `singlePageThumbnail`
+
+The path to the image file used as the thumbnail in the single page (relative to `$YOUR_SITE_REPO/static`). Effective when `pageType = "document"`.
+
+
+### `documentPath`
+
+The path to the document file (relative to `$YOUR_SITE_REPO/static`). Effective when `pageType = "document"`.
 
 
 ## Theme-specific Shortcodes
