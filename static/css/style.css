@@ -130,6 +130,15 @@ h4 {
   font-size: 1.2rem;
 }
 
+ul {
+  margin-bottom: 1rem;
+}
+
+ol {
+  margin-bottom: 1rem;
+}
+
+/*
 ul.navbar-nav > li {
   margin-top: 0rem;
   margin-bottom: 0rem;
@@ -143,7 +152,7 @@ ul.dropdown-menu > li {
 li {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
-}
+} */
 
 .upcards-code-block {
   margin-bottom: 1rem;
